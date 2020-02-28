@@ -111,6 +111,7 @@ function makeid(length) {
 }
 const addUser = async (req, res) => {
     try {
+        console.log("hi")
         if (!req.body.name) throw { status: httpStatus.BAD_REQUEST, message: 'name is required' };
         var url = req.body.imageURL
         var spec = req.body.speciality
@@ -146,6 +147,9 @@ const addUser = async (req, res) => {
             lon = (Math.random() * (UPPER_RIGHT_CORENT[1] - BOTTOM_LEFT_CORENT[1]) + BOTTOM_LEFT_CORENT[1]).toFixed(7);
         }
 
+        console.log("Before user pboj creation")
+
+
         Obj = User({
             name: req.body.name,
             email: req.body.email,
@@ -162,13 +166,17 @@ const addUser = async (req, res) => {
                 lat, lon
             }
         });
+        console.log("Before save")
+
         await Obj.save();
         res.status(httpStatus.OK).send("new user was created")
     }
     catch (err) {
+        console.log(err)
+
         if (err.code == 11000)
-            res.status(400).send({ message: "mail is already in use" })
-        else return { message: "unkown error" };
+            res.status(httpStatus.BAD_REQUEST).send({ message: "mail is already in use" })
+        else res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: "unkown error" });
 
     }
 }

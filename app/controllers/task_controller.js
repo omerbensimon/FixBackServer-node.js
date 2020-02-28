@@ -65,7 +65,7 @@ const updateTask = async (req, res) => {
                 break;
         }
         await Task.updateOne({ _id: req.params.taskId }, tempObj);
-        logger.log(`Task was updated successfully by ${userObj[0].name} the ${userObj[0].Role}!`);
+        logger.log(`Task was updated successfully by ${userObj.name} the ${userObj.Role}!`);
         res.status(httpStatus.OK).send('Task was updated successfully!')
     } catch (err) {
         res.status(err.status || httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
