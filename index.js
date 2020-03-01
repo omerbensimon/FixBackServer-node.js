@@ -10,6 +10,7 @@ require('./config/database.config').connection;
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(express.static("public"));
+var cors = require('cors');
 
 const PORT = process.env.PORT || 8080;
 const resturantRoute = require('./app/routes/resturant_routes.js');
@@ -20,6 +21,7 @@ const deviceRoute = require('./app/routes/device_routes.js');
 const locationRoute = require('./app/routes/location_route');
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(resturantRoute);
